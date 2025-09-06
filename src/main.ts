@@ -26,12 +26,8 @@ const controls = new OrbitControls(orbitCamera, renderer.domElement);
 controls.target.set(16, 0, 16);
 controls.update()
 
-const scene = new THREE.Scene();
-const world = new World()
-world.generate();
-scene.add(world);
 
-function setupLights() {
+function setupLights(scene: THREE.Scene) {
   const sun = new THREE.DirectionalLight();
   sun.position.set(50, 50, 50);
   sun.castShadow = true;
@@ -52,32 +48,46 @@ function setupLights() {
   // scene.add(shadowHelper);
 }
 
+function initGame() {
+  const scene = new THREE.Scene();
+  const world = new World()
+  world.generate();
+  scene.add(world);
 
-const player = new Player(scene);
-const physics = new Physics(scene);
+  const player = new Player(scene);
+  const physics = new Physics(scene);
 
-let prvsTime = performance.now();
+  setupLights(scene)
+  createUI(world, player);
+  let prvsTime = performance.now();
 
-function animate() {
-  let currentTime = performance.now();
-  let dt = (currentTime - prvsTime) / 1000;
-  requestAnimationFrame(animate);
-  player.applyInputs(dt);
-  player.updateBoundsHelper();
-  physics.update(dt, player, world);
-  renderer.render(scene, player.controls.isLocked ? player.camera : orbitCamera);
-  stats.update()
-  prvsTime = currentTime;
+  window.addEventListener("resize", () => {
+    orbitCamera.aspect = window.innerWidth / window.innerHeight;
+    orbitCamera.updateProjectionMatrix();
+    player.camera.aspect = window.innerWidth / window.innerHeight;
+    player.camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  })
+
+  function animate() {
+    let currentTime = performance.now();
+    let dt = (currentTime - prvsTime) / 1000;
+    requestAnimationFrame(animate);
+    player.applyInputs(dt);
+    player.updateBoundsHelper();
+    physics.update(dt, player, world);
+    renderer.render(scene, player.controls.isLocked ? player.camera : orbitCamera);
+    stats.update()
+    prvsTime = currentTime;
+  }
+  
+  animate();
 }
 
-window.addEventListener("resize", () => {
-  orbitCamera.aspect = window.innerWidth / window.innerHeight;
-  orbitCamera.updateProjectionMatrix();
-  player.camera.aspect = window.innerWidth / window.innerHeight;
-  player.camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-})
 
-setupLights()
-createUI(world, player);
-animate()
+
+document.getElementById("start-button")?.addEventListener("click", () => {
+  const menu = document.getElementById("main-menu");
+  menu?.classList.add("hidden");
+  initGame();
+})

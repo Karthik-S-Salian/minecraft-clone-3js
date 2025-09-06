@@ -11,12 +11,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body{
+body {
   margin: 0;
   padding: 0;
 }
 
-#info{
+#info {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -25,3 +25,196 @@ body{
   font-size: 2rem;
   font-family: sans-serif;
 }
+
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: Minecraftia;
+  src: url('./Minecraftia-Regular.ttf') format('truetype');
+}
+
+
+html {
+  font: 12pt 'Minecraftia', sans-serif;
+}
+
+#main-menu {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  background-image: url('splashbg.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Minecraft Style Menu */
+.mc-menu {
+  --btn-size: 30pt;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--btn-size) / 6);
+  width: calc(var(--btn-size) * 10);
+  height: auto;
+}
+
+/* Minecraft Style Button */
+.mc-button {
+  height: var(--btn-size);
+  width: calc(var(--btn-size) * 10);
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  background: #999 url('https://i.ibb.co/rb2TWXL/bgbtn.png') center / cover;
+  image-rendering: pixelated;
+  border: 2px solid #000;
+}
+
+.mc-menu .double{
+  margin-top: calc(var(--btn-size)/2);
+}
+
+.mc-button.lang img {
+  width: 26px;
+  height: 26px;
+}
+
+.mc-button.lang .title {
+  padding-bottom: 0;
+}
+
+/* Button title */
+.mc-button .title {
+  width: 100%;
+  height: 100%;
+  padding-bottom: .3em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #DDD;
+  text-shadow: 2px 2px #000A;
+  box-shadow: inset -2px -4px #0006, inset 2px 2px #FFF7;
+}
+
+/* Hover/Active Effects */
+.mc-button:hover .title {
+  background-color: rgba(100, 100, 255, .45);
+  text-shadow: 2px 2px #202013CC;
+  color: #FFFFA0;
+}
+
+.mc-button:active .title {
+  box-shadow: inset -2px -4px #0004, inset 2px 2px #FFF5;
+}
+
+/* Top Title */
+.mc-title {
+  margin-bottom: 24px;
+  padding: 8px 16px;
+  image-rendering: pixelated;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.mc-title h1 {
+  font-family: 'Minecraftia', sans-serif;
+  text-transform: uppercase;
+  word-spacing: 12pt;
+  letter-spacing: 2pt;
+  font-size: 36pt;
+  font-weight: bolder;
+  color: gray;
+  text-shadow: 3px 3px #000;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.mc-title h3{
+  font-family: 'Minecraftia', sans-serif;
+  text-transform: uppercase;
+  word-spacing: 12pt;
+  letter-spacing: 2pt;
+  font-size: 16pt;
+  font-weight: bolder;
+  color: gray;
+  -webkit-text-stroke: #000 1px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+
+/* Minecraft Splash Text Style */
+.mc-title p {
+  position: absolute;
+  bottom: 15px;
+  right: -100px;
+
+  font-family: 'Minecraftia', sans-serif;
+  font-size: 12pt;
+  color: #FFFF00;
+  text-shadow: 2px 2px #000;
+  transform: rotate(-20deg);
+  animation: flicker 1.5s infinite;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Flicker Animation */
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+    transform: rotate(-20deg) scale(1);
+  }
+  10% {
+    opacity: 0.8;
+    transform: rotate(-20deg) scale(1.05);
+  }
+  20% {
+    opacity: 0.9;
+  }
+  30% {
+    opacity: 1;
+    transform: rotate(-20deg) scale(1.03);
+  }
+  40% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.85;
+  }
+  70% {
+    opacity: 1;
+    transform: rotate(-20deg) scale(1.02);
+  }
+  80% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 1;
+  }
+}
+
+
+.hidden {
+  display: none !important;
+}
+
